@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Tu peux enregistrer ici des services ou des dépendances
     }
 
     /**
@@ -21,17 +23,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Définir la longueur par défaut des chaînes de caractères dans les migrations
+        // Définir la longueur par défaut des chaînes pour les anciennes versions de MySQL
         Schema::defaultStringLength(191);
-        
-        // Supprimer le wrapper data des ressources API
+
+        // Supprimer l'enveloppe "data" autour des ressources JSON
         JsonResource::withoutWrapping();
-        
-        // Définir le locale de l'application en français
+
+        // Définir la langue de l'application en français
         app()->setLocale('fr');
-        
-        // Définir les paramètres de pagination
-        \Illuminate\Pagination\Paginator::defaultView('pagination::default');
-        \Illuminate\Pagination\Paginator::defaultSimpleView('pagination::simple-default');
+
+        // Utiliser les vues de pagination Bootstrap (ou autres si tu as personnalisé)
+        Paginator::defaultView('pagination::default');
+        Paginator::defaultSimpleView('pagination::simple-default');
     }
 }
